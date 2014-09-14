@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyYamba2 Retry !!!</string>
+    <string name="action_settings">Settings Retry</string>
+    <string name="hello_world">No Hello world..Its bull shit </string>
+    <string name="update_status_btn">update status :)</string>
+    <string name="status_textbox_hint">Write you new status here !!!</string>
+
+</resources>
