@@ -3,10 +3,13 @@ package com.example.myyamba2;
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,24 +19,28 @@ public class MainActivity extends Activity {
 //	Button buttonUpdate;
 	EditText editStatus;
 	public static String TAG = "StatusActivity";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-//		buttonUpdate = (Button) findViewById(R.id.button_update); 
-		editStatus = (EditText) findViewById(R.id.edit_status);
+		// Point A
+		//Debug.startMethodTracing("Yamba.trace");
 		
-//		buttonUpdate.setOnClickListener(this);
+		setContentView(R.layout.activity_main);
+		// buttonUpdate = (Button) findViewById(R.id.button_update); 
+		editStatus = (EditText) findViewById(R.id.edit_status);		
+		// buttonUpdate.setOnClickListener(this);
 	}
 
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	protected void onStop() {
+		super.onStop();
+		// Point B
+		// Debug.stopMethodTracing();
 	}
 
-//	@Override
+	// @Override
 	public void onClick(View v) {
 		String status = editStatus.getText().toString();
 		editStatus.setText("");
@@ -53,7 +60,6 @@ public class MainActivity extends Activity {
 				return  "Successfully posted: " + params[0];
 			} catch (TwitterException e) {
 				Log.e(TAG, "Died: ", e);
-				e.printStackTrace();
 				return "Failed posting: ";
 			}
 		}
@@ -65,5 +71,36 @@ public class MainActivity extends Activity {
 			Toast.makeText(MainActivity.this, result, Toast.LENGTH_LONG).show();
 		}
 		
+	}
+
+	// Menu stuff
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intentUpdateer = new Intent(this, UpdaterService.class);
+		Intent intentRefresh = new Intent(this, RefreshService.class);
+		
+		switch(item.getItemId()) {
+		case R.id.item_start_service:
+			startService(intentUpdateer);
+			return true;
+		case R.id.stop_service:
+			stopService(intentUpdateer);
+			return true;
+		case R.id.refresh_service:
+			Log.d(TAG, "Menu clicked -- refresh_service");
+			startService(intentRefresh);
+			return true;
+		default:
+			Log.d(TAG, "Menu clicked But default habdler");
+			return false;
+		}
+	}
+	
+	// Called only once when menu button clicked for the first time
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
 	}
 }
