@@ -90,6 +90,10 @@ public class MainActivity extends Activity {
 			Log.d(TAG, "Menu clicked -- refresh_service");
 			startService(intentRefresh);
 			return true;
+		case R.id.item_prefs:
+			Log.d(TAG, "Menu clicked -- Preferences");
+			startActivity(new Intent(this, PrefsActivity.class));
+			return true;
 		default:
 			Log.d(TAG, "Menu clicked But default habdler");
 			return false;

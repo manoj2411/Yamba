@@ -9,5 +9,13 @@
     <string name="start_service">Start Service</string>
     <string name="stop_service">Stop Service</string>
     <string name="refresh">Refresh</string>
+    <string name="username">Username</string>
+    <string name="username_summary">Please enter your login username</string>
+    <string name="password">Password</string>
+    <string name="password_summary">Please enter your login password</string>
+    <string name="server">Enter your server API root</string>
+    <string name="preferences">Preferences</string>
+    <string name="delay">Delay</string>
+    <string name="delay_summary">Delay in fetching tweets (in seconds)</string>
 
 </resources>

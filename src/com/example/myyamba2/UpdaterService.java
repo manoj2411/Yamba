@@ -11,14 +11,14 @@ import android.util.Log;
 
 public class UpdaterService extends Service {
 	static final String TAG = "UpdaterService";
-	static final int DELAY = 10000;
-	Twitter twitter;
+//	static final int DELAY = 30;
+//	Twitter twitter;
 	boolean running = true;
 	
 	@Override
 	public void onCreate() {
-		twitter = new Twitter("student", "password");
-		twitter.setAPIRootUrl("http://yamba.marakana.com/api");
+//		twitter = new Twitter("student", "password");
+//		twitter.setAPIRootUrl("http://yamba.marakana.com/api");
 		
 		Log.d(TAG, "onCreated");
 		super.onCreate();
@@ -30,13 +30,15 @@ public class UpdaterService extends Service {
 			public void run() {
 				try {
 					while(running) {
-						List<Status> timeline = twitter.getPublicTimeline();
+						List<Status> timeline = ((YambaApp) getApplication()).getTwitter().getPublicTimeline();
 						
 						for (Status status : timeline) {
 							Log.d(TAG, String.format("%s: %s", status.user.name,
 									status.text));
 						}
-						Thread.sleep(DELAY);
+						int delay = Integer.parseInt(((YambaApp) getApplication()).prefs.getString("delay", "30"));
+						Thread.sleep(delay * 1000);
+						
 					}
 				} catch (TwitterException e) {
 					e.printStackTrace();
