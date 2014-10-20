@@ -36,7 +36,7 @@ public class UpdaterService extends Service {
 							Log.d(TAG, String.format("%s: %s", status.user.name,
 									status.text));
 						}
-						int delay = Integer.parseInt(((YambaApp) getApplication()).prefs.getString("delay", "30"));
+						int delay = Integer.parseInt(((YambaApp) getApplication()).prefs.getString("delay", "10"));
 						Thread.sleep(delay * 1000);
 						
 					}
